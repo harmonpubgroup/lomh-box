@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" data-page="volume-i">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Letters of My Heart</title>
+<!--
+  LOMH light book template v1 (2026-11-21). ONE shared file for /volume-i ... /volume-vi and /six-volume-collection.
+  Which page it shows: ?page=<slug> on the embed URL (e.g. light.html?page=volume-ii), or, when this whole file is pasted
+  into a Wix "Code" embed, the data-page attribute on <body> below. Fallbacks: the parent page's referrer, then the
+  book the page code sends.
+  Talks to the EXISTING book-page code (message source "lomh-pp"): "ready", "navigate" {url:"/site-path"},
+  "openNotify" {bookId}, "openPeekInside", "height". No page-code change is needed to use it.
+  No pre-order wording. Prices and product slugs checked on the live store Nov 21, 2026 (Central).
+  DRAFT v6 for /volume-i only (Stacie yes Nov 23, 2026, 10:25 AM CST) — PREVIEW, not live.
+  Phone (max-width:599px) layout only, except the edition list order applies at all widths. Zero wording changes.
+  Edition order unchanged from v4: Gift Card, Paperback (default), Hardcover, Hardcover with Dust Jacket, Signed, eBook.
+  v6: section label above the illustrations reads "Illustrations" instead of a second "Peek inside".
+  v6 phone: Peek Inside is a full-width centered row under the cover; tagline is one line (14.5px at the live 320px iframe).
+-->
+<link rel="preconnect" href="https://static.wixstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<style>
+:root{--bg:#F6EFE4;--card:#FBF6EE;--gold:#C9A55A;--heading:#8C1C1C;--ink:#3A2A22;--muted:#6A5346;--btn:#6B3F1D;--nav:#5E1020;
+  --line:rgba(201,165,90,.55);--serif:"EB Garamond",Garamond,Georgia,"Times New Roman",serif;--caps:Cinzel,"EB Garamond",Georgia,serif}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--serif)}
+body{-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+[hidden]{display:none!important}
+.vnav{max-width:1120px;margin:0 auto;padding:10px 18px 0}
+.vrow{display:flex;justify-content:center;align-items:center;gap:0 24px;padding-bottom:2px;border-bottom:1px solid var(--gold)}
+.vnav a{display:inline-flex;align-items:center;min-height:44px;font:400 16px/1.2 var(--serif);color:var(--nav);text-decoration:none;white-space:nowrap}
+.vnav a:hover{text-decoration:underline;text-underline-offset:3px}
+.vnav .vl{display:none}
+.vbot{padding:8px 18px 22px}.vbot .vrow{border-bottom:0;border-top:1px solid var(--gold);padding:2px 0 0}
+.page{max-width:1100px;margin:0 auto;padding:14px 18px 20px}
+.cover-wrap{display:flex;flex-direction:column;align-items:center;margin:0 0 10px}
+.cover{display:block;padding:0;border:0;background:none;width:220px;line-height:0}
+.cover img{width:100%;height:auto;aspect-ratio:var(--ar,4/5);object-fit:contain;background:var(--card)}
+.peek{margin:8px 0 0;border:0;border-radius:999px;background:var(--heading);color:#F6EFE4;padding:6px 16px;font:400 11px/1 var(--caps);letter-spacing:.14em;text-transform:uppercase}
+.title-block{text-align:center;margin:0 0 6px}
+.eyebrow{margin:0 0 4px;font:400 10px/1.25 var(--caps);letter-spacing:.16em;text-transform:uppercase;color:var(--btn)}
+h1{margin:0;font:500 32px/1 var(--serif);color:var(--heading)}
+.byline{margin:4px 0 0;font:italic 400 15px/1.25 var(--serif)}
+.foreword{margin:3px 0 0;font:italic 400 14px/1.25 var(--serif);color:var(--muted)}
+.tagline{margin:6px 0 0;font:italic 500 16.5px/1.3 var(--serif);text-wrap:balance}
+.fact,.date{margin:4px 0 0;font:400 14.5px/1.3 var(--serif);color:var(--muted)}
+.date{font:400 12px/1.3 var(--caps);letter-spacing:.12em;text-transform:uppercase;color:var(--btn);margin-top:8px}
+.choose{margin:12px 0 6px;text-align:center;font:400 10px/1 var(--caps);letter-spacing:.16em;text-transform:uppercase;color:var(--btn)}
+.editions{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.edition{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 12px;min-height:44px;border:0;background:transparent;border-bottom:1px solid var(--line);font:500 15.5px/1.2 var(--serif)}
+.edition:last-child{border-bottom:0}
+.edition[aria-checked="true"]{background:#F3E6CF}
+.radio{flex:none;width:15px;height:15px;border-radius:50%;border:1.5px solid var(--btn);position:relative}
+.edition[aria-checked="true"] .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--btn)}
+.ename{flex:1}.eprice{font-weight:600;white-space:nowrap}
+.variant{min-height:1.3em;margin:8px 2px;font:italic 400 14px/1.3 var(--serif);color:var(--muted);text-align:center;text-wrap:balance}
+.price-big{margin:10px 0 2px;text-align:center;font:600 24px/1.2 var(--serif)}
+.price-note{margin:0 0 8px;text-align:center;font:italic 400 14.5px/1.3 var(--serif);color:var(--muted)}
+.order{display:block;width:100%;min-height:46px;border:0;border-radius:8px;background:var(--btn);color:#F6EFE4;font:400 13px/1 var(--caps);letter-spacing:.14em;text-transform:uppercase;padding:10px}
+.order:disabled{opacity:.6}
+.xmas{margin:10px 0 6px;text-align:center;font:400 16px/1.35 var(--serif);color:#8C1C1C}
+.status{min-height:1.2em;margin:6px 0;text-align:center;font:400 13px/1.3 var(--serif);color:var(--heading)}
+.note{margin:4px 0 10px;text-align:center;font:400 13.5px/1.3 var(--serif);color:var(--muted)}
+.ship{border:1px solid var(--line);border-radius:8px;background:var(--card);padding:0 12px}
+.ship summary{list-style:none;cursor:pointer;padding:10px 0;min-height:44px;font:400 10px/1 var(--caps);letter-spacing:.14em;text-transform:uppercase;color:var(--btn);display:flex;align-items:center;justify-content:space-between}
+.ship summary::-webkit-details-marker{display:none}
+.ship summary::after{content:"+";font:500 18px/1 var(--serif)}
+.ship[open] summary::after{content:"\2013"}
+.ship-body{padding:0 0 10px;font:400 14.5px/1.45 var(--serif)}
+.ship-body p{margin:0 0 6px}.ship-body p:last-child{margin:0}
+.more{margin:24px 0 0;text-align:center}
+.orn{display:flex;align-items:center;justify-content:center;gap:6px;margin:0 auto 10px;width:120px}
+.orn::before,.orn::after{content:"";flex:1;height:1px;background:var(--gold)}
+.orn span{width:5px;height:5px;background:var(--gold);transform:rotate(45deg)}
+.more h2{margin:0 0 6px;font:400 11px/1 var(--caps);letter-spacing:.2em;text-transform:uppercase;color:var(--btn)}
+.more p{margin:0 0 10px;font:400 15.5px/1.45 var(--serif)}
+.peek-cap{font-style:italic!important;color:var(--muted)}
+.strip{display:flex;align-items:flex-end;justify-content:center;gap:6px;margin:0 0 18px}
+.strip img{flex:1;min-width:0;width:33%;aspect-ratio:1/1;object-fit:contain}
+/* v2 phone layout: /volume-i only, below 600px. .price-sel is hidden at 600px and up so iPad/desktop match live. */
+.price-sel{display:none}
+@media (max-width:599px){
+  html[data-page="volume-i"] .vnav{padding-bottom:0}
+  html[data-page="volume-i"] .page{padding-top:6px}
+  html[data-page="volume-i"] .hero{display:grid;grid-template-columns:45% minmax(0,1fr);column-gap:12px;align-items:start;
+    grid-template-areas:
+      "eyebrow eyebrow"
+      "title title"
+      "cover meta"
+      "peek peek"
+      "tagline tagline"
+      "order order"
+      "choose choose"
+      "editions editions"
+      "variant variant"
+      "xmas xmas"
+      "status status"
+      "note note"
+      "ship ship"}
+  html[data-page="volume-i"] .buy,
+  html[data-page="volume-i"] .title-block{display:contents}
+  html[data-page="volume-i"] .eyebrow{grid-area:eyebrow;margin:0 0 2px;text-align:center}
+  html[data-page="volume-i"] .hero h1{grid-area:title;margin:0 0 8px;text-align:center}
+  html[data-page="volume-i"] .cover-wrap{grid-area:cover;margin:0}
+  html[data-page="volume-i"] .cover{width:100%}
+  html[data-page="volume-i"] .buy-meta{grid-area:meta;display:flex;flex-direction:column;align-items:flex-start;align-self:stretch;min-width:0;min-height:100%}
+  html[data-page="volume-i"] .byline{margin:0;text-align:left;font-size:18px;line-height:1.25}
+  html[data-page="volume-i"] .foreword{margin:12px 0 0;text-align:left;font-size:13px;line-height:1.25}
+  html[data-page="volume-i"] .fact{margin:12px 0 0;text-align:left}
+  html[data-page="volume-i"] .price-sel{display:block;margin:12px 0 0;text-align:left;font:600 18px/1.2 var(--serif);color:var(--heading)}
+  html[data-page="volume-i"] .peek{box-sizing:border-box;grid-area:peek;width:180px;max-width:100%;min-height:36px;margin:10px 0;padding:8px 16px;font-size:11px;letter-spacing:.12em;justify-self:center;display:inline-flex;align-items:center;justify-content:center}
+  html[data-page="volume-i"] .tagline{grid-area:tagline;margin:10px 0 8px;text-align:center;white-space:nowrap;text-wrap:nowrap;font-size:min(16.5px,4.53vw)}
+  html[data-page="volume-i"] .order{grid-area:order;margin:0 0 8px}
+  html[data-page="volume-i"] .choose{grid-area:choose}
+  html[data-page="volume-i"] .editions{grid-area:editions}
+  html[data-page="volume-i"] .edition{padding:6px 12px;min-height:40px}
+  html[data-page="volume-i"] .variant{grid-area:variant}
+  html[data-page="volume-i"] .xmas{grid-area:xmas}
+  html[data-page="volume-i"] .status{grid-area:status}
+  html[data-page="volume-i"] .note{grid-area:note}
+  html[data-page="volume-i"] .ship{grid-area:ship}
+}
+@media (min-width:600px){
+  .vnav .vl{display:inline}.vnav .vs{display:none}.vrow{gap:0 40px}
+  .buy-meta{display:contents}
+  html[data-page="volume-i"] .title-block{display:flex;flex-direction:column}
+  html[data-page="volume-i"] .eyebrow{order:1}
+  html[data-page="volume-i"] .title-block h1{order:2}
+  html[data-page="volume-i"] .byline{order:3}
+  html[data-page="volume-i"] .foreword{order:4}
+  html[data-page="volume-i"] .tagline{order:5}
+  html[data-page="volume-i"] .fact{order:6}
+  html[data-page="volume-i"] .date{order:7}
+}
+@media (min-width:900px){
+  .vnav{padding:14px 32px 0}.vbot{padding:8px 32px 28px}
+  .page{padding:24px 28px 32px}
+  .hero{display:grid;grid-template-columns:420px minmax(0,1fr);gap:0 48px;align-items:start}
+  .cover-wrap{margin:0}
+  .cover{width:100%;max-width:420px}
+  .title-block,.choose,.variant,.xmas,.note,.status,.price-big,.price-note{text-align:left}
+  .hero.nocover .cover-wrap{margin:0 0 10px}
+  h1{font-size:44px}.byline{font-size:18px}.foreword{font-size:16px}.tagline{font-size:20px}.fact{font-size:16px}
+  .edition{font-size:18px;padding:10px 14px}
+  .order{max-width:420px}
+  .hero.nocover{display:block;max-width:640px;margin:0 auto}
+  .hero.nocover .title-block,.hero.nocover .choose,.hero.nocover .variant,.hero.nocover .xmas,.hero.nocover .note,.hero.nocover .price-big,.hero.nocover .price-note{text-align:center}
+  .hero.nocover .order{margin:0 auto}
+  .more p{font-size:17px}.strip{gap:16px;max-width:820px;margin:0 auto 24px}
+}
+</style>
+</head>
+<body data-page="volume-i" data-cover="">
+<nav class="vnav" id="navTop" aria-label="Volumes" hidden><div class="vrow"></div></nav>
+<main class="page" id="page"></main>
+<nav class="vnav vbot" id="navBot" aria-label="Volumes, bottom" hidden><div class="vrow"></div></nav>
+<script>
+(function(){
+"use strict";
+var SITE="https://www.lettersofmyheart.com", NS="lomh-pp";
+var XMAS="Order by December 9 for Christmas!";
+var CHECKOUT_NOTE="Shipping and delivery details available at checkout.";
+var SHIP=["All print orders placed by December 9 will be included in our final Christmas shipment on December 10, 2026.",
+          "Order early to give your gift the best chance of arriving before Christmas. Delivery times vary by location and carrier."];
+var M="https://static.wixstatic.com/media/";
+var YH_COVER=M+"d66f78_cb5ccbe565ce49718afdb5869ce4f902~mv2.jpg";
+var YH_ALT="Yearning Hearts, Volume I of Letters of My Heart by Eric Harmon, Foreword by Dr. John Hubbard";
+
+/* nav: [path, long label, short label], same labels and order as today's lomh-box (Set > I > II ... VI > Set) */
+var PAGES={
+ "volume-i":{bookId:"lomh-vol1",kind:"available",peek:true,eyebrow:"Letters of My Heart \u00b7 Volume I",title:"Yearning Hearts",
+   byline:"Poetry by Eric Harmon",foreword:"Foreword by Dr. John Hubbard.",tagline:"The ache of longing. The hope of love on the horizon.",fact:"110 illustrated poems.",
+   cover:YH_COVER,ar:"4/5",alt:YH_ALT,
+   choices:[
+    {id:"giftcard",name:"Gift Card",price:"from $25",line:"Let them choose their edition.",label:"Choose a Gift Card",note:"Choose $25, $50, $100, or another amount on the gift card page.",go:"/gift-card",img:M+"d66f78_e2663e7710c54f498d29f308245609fb~mv2.png",ar:"1/1",alt:"Letters of My Heart gift card, shown with books, greeting cards and a mug"},
+    {id:"paperback",name:"Paperback",price:"$24.99",line:"Softcover, with original pencil illustrations by Jonathan.",go:"/product-page/yearning-hearts-volume-i-paperback",ship:true,dflt:true},
+    {id:"hardcover",name:"Hardcover",price:"$37.99",line:"Cover art printed on the boards, no dust jacket.",go:"/product-page/yearning-hearts-volume-i-case-laminate-hardcover",ship:true},
+    {id:"jacketed",name:"Hardcover with Dust Jacket",price:"$44.99",line:"Hardcover in a printed dust jacket.",go:"/product-page/yearning-hearts-volume-i-jacketed-hardcover",ship:true,img:M+"d66f78_c798ef198e914df8be82829155a6268b~mv2.webp",ar:"1/1",alt:"Yearning Hearts, Volume I, jacketed hardcover with a matte dust jacket"},
+    {id:"signed",name:"Signed Collector\u2019s Edition",price:"$65",line:"Jacketed gray cloth hardcover, hand-signed by Eric and made out to the name you choose.",go:"/product-page/yearning-hearts-volume-i-signed-hardcover",ship:true},
+    {id:"ebook",name:"eBook",price:"$9.99",line:"Digital edition on Amazon Kindle, November 24.",label:"Order on Amazon",note:"The eBook is fulfilled on Amazon Kindle. There is no shipping.",ext:"https://www.amazon.com/dp/B0HPZ1H15J"}],
+   more:{h:"Illustrations",cap:"Original pencil illustrations by Jonathan",
+     imgs:[[M+"d66f78_0ec65965da4c437b996fe0dfee7b30a1~mv2.png","Pencil illustration: a guitar resting on a porch swing"],
+           [M+"d66f78_ab6e3a4d497c4624a7ed31cbbc11c257~mv2.png","Pencil illustration: cowboy boots in a field with butterflies"],
+           [M+"d66f78_0930847349e1436b9c51dd29b0bffa63~mv2.png","Pencil illustration: a cowboy hat on a fence post at dusk"]],
+     about:["Foreword by Dr. John Hubbard.","Eric Harmon is a lifelong poet and singer, a Texas native whose writing is rooted in faith, family, love, heartbreak, and renewal."]},
+   nav:{prev:["/six-volume-collection","\u2039 The Complete Set","\u2039 Complete Set"],next:["/volume-ii","Next Volume \u203a","Next \u203a"]}},
+ "volume-ii":{bookId:"lomh-vol2",kind:"comingSoon",title:"Whispers of Hope - Volume II",date:"Coming Winter 2027",cover:M+"d66f78_1ca3387955a54fdc995fc49ea6ad609b~mv2.webp",alt:"Whispers of Hope - Volume II",
+   nav:{prev:["/volume-i","\u2039 Previous Volume","\u2039 Previous"],next:["/volume-iii","Next Volume \u203a","Next \u203a"]}},
+ "volume-iii":{bookId:"lomh-vol3",kind:"comingSoon",title:"Texas Dreams - Volume III",date:"Coming Spring 2027",cover:M+"d66f78_ef549348965742cd877adfc22ee4b1d3~mv2.webp",alt:"Texas Dreams - Volume III",
+   nav:{prev:["/volume-ii","\u2039 Previous Volume","\u2039 Previous"],next:["/volume-iv","Next Volume \u203a","Next \u203a"]}},
+ "volume-iv":{bookId:"lomh-vol4",kind:"comingSoon",title:"Seeking Eternity - Volume IV",date:"Coming Summer 2027",cover:M+"d66f78_0e7940b7d3664c4693e2f2dd6086b21a~mv2.webp",alt:"Seeking Eternity - Volume IV",
+   nav:{prev:["/volume-iii","\u2039 Previous Volume","\u2039 Previous"],next:["/volume-v","Next Volume \u203a","Next \u203a"]}},
+ "volume-v":{bookId:"lomh-vol5",kind:"comingSoon",title:"Roots of Love - Volume V",date:"Coming Fall 2027",cover:M+"d66f78_b9012d514b364a139052596eaf98bdda~mv2.webp",alt:"Roots of Love - Volume V",
+   nav:{prev:["/volume-iv","\u2039 Previous Volume","\u2039 Previous"],next:["/volume-vi","Next Volume \u203a","Next \u203a"]}},
+ "volume-vi":{bookId:"lomh-vol6",kind:"comingSoon",title:"My Eternal - Volume VI",date:"Coming Winter 2028",cover:M+"d66f78_f1701f3391294b328d7d2de152677bc8~mv2.webp",alt:"My Eternal - Volume VI",
+   nav:{prev:["/volume-v","\u2039 Previous Volume","\u2039 Previous"],next:["/six-volume-collection","The Complete Set \u203a","Complete Set \u203a"]}},
+ /* Complete Set: PENDING STACIE'S YES (draft 2026-11-21, COPY-FOR-APPROVAL.md). Wording matched to Volume I; no pre-order wording.
+    LIVE TODAY (rollback text): date "Volume I Available November 24, 2026", button "Pre-order the Signed Set", no Christmas line, no shipping section.
+    eyebrow, title, line, price, priceNote, eName, cover and alt are unchanged from live. */
+ "six-volume-collection":{bookId:"lomh-set6",kind:"set",eyebrow:"Letters of My Heart \u00b7 The Complete Set",title:"All Six Volumes, Hand-Signed",
+   tagline:"All six volumes of Letters of My Heart, hand-signed by Eric, only here.",date:"Volume I Ships First",
+   eName:"Signed Collection",price:"$249",priceNote:"Save $141 vs. six signed singles at $65",
+   line:"Volumes II\u2013VI ship as each one is released.",
+   label:"Order Now",xmas:true,
+   ship:[SHIP[0],"In the Signed Set, that shipment includes your signed Volume I. Volumes II\u2013VI ship as each one is released, through February 2028.",SHIP[1]],
+   go:"/product-page/letters-of-my-heart-six-volume-collection",
+   cover:M+"d66f78_b1b50b6d0a9e4a5e8955abe220c821d5~mv2.jpg",ar:"1/1",
+   alt:"The six-volume Letters of My Heart set in a sunset library, with the YOU greeting card, the GRACE card pack, the Melodies of My Heart 'The Gift of Music' card, and a Dear Reader letter with a gold seal",
+   nav:{prev:["/volume-vi","\u2039 Volume VI","\u2039 Volume VI"],next:["/volume-i","Volume I \u203a","Volume I \u203a"]}}
+};
+var ALIAS={"vol1":"volume-i","book-test-vol1":"volume-i","book-test-vol2":"volume-ii","book-test-vol3":"volume-iii","book-test-vol4":"volume-iv","book-test-vol5":"volume-v","book-test-vol6":"volume-vi","the-collection":"six-volume-collection"};
+var BY_BOOK={};Object.keys(PAGES).forEach(function(k){BY_BOOK[PAGES[k].bookId]=k;});
+
+var inFrame=window.parent&&window.parent!==window, connected=false, slug="", P=null;
+var NOCOVER=false;try{NOCOVER=new URLSearchParams(location.search).get("cover")==="0"||document.body.getAttribute("data-cover")==="0";}catch(e){}
+function norm(p){p=String(p||"").trim();try{if(/^https?:/i.test(p))p=new URL(p).pathname;}catch(e){}p=p.replace(/^\/+|\/+$/g,"").split("/").pop()||"";return ALIAS[p]||p;}
+function detect(){
+  try{var q=new URLSearchParams(location.search);var p=norm(q.get("page")||q.get("p")||"");if(PAGES[p])return p;}catch(e){}
+  var b=norm(document.body.getAttribute("data-page"));if(PAGES[b])return b;
+  try{if(location.hash){var h=norm(location.hash.slice(1).replace(/^page=/,""));if(PAGES[h])return h;}}catch(e){}
+  try{if(document.referrer){var r=norm(document.referrer);if(PAGES[r])return r;}}catch(e){}
+  return "";
+}
+/* Wix image service: right-sized WebP/AVIF instead of the full original. */
+function sized(u,w){if(!u||u.indexOf("static.wixstatic.com/media/")<0||/\/v1\//.test(u))return u;var n=u.split("/").pop().replace(/~mv2\.(png|jpe?g|webp)$/i,".webp");return u+"/v1/fit/w_"+w+",h_"+Math.round(w*1.6)+",q_80,enc_auto/"+n;}
+function setImg(img,u,alt,sizes,ws,eager){img.alt=alt||"";img.decoding="async";
+  if(eager){img.setAttribute("fetchpriority","high");img.loading="eager";}else img.loading="lazy";
+  img.srcset=ws.map(function(w){return sized(u,w)+" "+w+"w";}).join(", ");img.sizes=sizes;img.src=sized(u,ws[ws.length-1]);}
+function el(t,c,txt){var e=document.createElement(t);if(c)e.className=c;if(txt!=null)e.textContent=txt;return e;}
+function send(m){if(!inFrame)return;m.source=NS;try{window.parent.postMessage(m,"*");}catch(e){}}
+
+function go(path){ /* site page: page code navigates (Wix same-tab); without page code, a normal top-level link */
+  if(inFrame&&connected){send({type:"navigate",url:path});return;}
+  try{window.top.location.href=SITE+path;}catch(e){window.open(SITE+path,"_top");}
+}
+function navLink(n){var a=el("a");a.href=SITE+n[0];a.target="_top";
+  a.appendChild(el("span","vl",n[1]));a.appendChild(el("span","vs",n[2]));
+  a.addEventListener("click",function(ev){if(inFrame&&connected){ev.preventDefault();send({type:"navigate",url:n[0]});}});return a;}
+function renderNav(d){["navTop","navBot"].forEach(function(id){var nav=document.getElementById(id),row=nav.firstChild;row.innerHTML="";
+  if(d.nav.prev)row.appendChild(navLink(d.nav.prev));row.appendChild(navLink(["/","Home","Home"]));if(d.nav.next)row.appendChild(navLink(d.nav.next));nav.hidden=false;});}
+
+var coverImg=null,state={};
+function cover(d,parent){
+  if(NOCOVER){parent.className+=" nocover";
+    if(d.peek){var pw=el("div","cover-wrap"),pp=el("button","peek","Peek Inside");pp.type="button";pp.id="peekBtn";pp.addEventListener("click",peek);pw.appendChild(pp);parent.appendChild(pw);}
+    return;} /* &cover=0: a native Wix image above the embed shows the cover (fastest first paint) */
+  var w=el("div","cover-wrap"),b=el(d.peek?"button":"div","cover");
+  if(d.peek){b.type="button";b.setAttribute("aria-label","Peek inside "+d.title);b.addEventListener("click",peek);}
+  coverImg=el("img");b.style.setProperty("--ar",d.ar||"1/1");
+  setImg(coverImg,d.cover,d.alt,"(min-width:900px) 420px, 220px",[440,840],true);
+  b.appendChild(coverImg);w.appendChild(b);
+  if(d.peek){var pk=el("button","peek","Peek Inside");pk.type="button";pk.id="peekBtn";pk.addEventListener("click",peek);w.appendChild(pk);}
+  parent.appendChild(w);
+}
+function peek(){send({type:"openPeekInside"});}
+function placePeek(){
+  var pk=document.getElementById("peekBtn"),wrap=document.querySelector(".cover-wrap"),hero=document.querySelector(".hero");
+  if(!pk||!wrap)return;
+  var phone=false;try{phone=window.matchMedia("(max-width:599px)").matches;}catch(e){}
+  if(phone){if(hero&&pk.parentNode!==hero)hero.appendChild(pk);}
+  else if(pk.parentNode!==wrap)wrap.appendChild(pk);
+}
+
+function render(s){
+  slug=s;var d=PAGES[s];document.documentElement.setAttribute("data-page",s);document.title=d.title+" | Letters of My Heart";
+  var page=document.getElementById("page");page.innerHTML="";
+  var hero=el("div","hero");page.appendChild(hero);cover(d,hero);
+  var col=el("div","buy");hero.appendChild(col);
+  var tb=el("div","title-block");col.appendChild(tb);
+  if(d.eyebrow)tb.appendChild(el("p","eyebrow",d.eyebrow));
+  tb.appendChild(el("h1","",d.title));
+  if(d.byline)tb.appendChild(el("p","byline",d.byline));
+  if(d.foreword)tb.appendChild(el("p","foreword",d.foreword));
+  if(d.tagline)tb.appendChild(el("p","tagline",d.tagline));
+  if(d.fact)tb.appendChild(el("p","fact",d.fact));
+  if(d.date)tb.appendChild(el("p","date",d.date));
+
+  if(d.kind==="available"){
+    var priceEl=el("p","price-sel");priceEl.id="selPrice";
+    var meta=el("div","buy-meta");
+    ["byline","foreword","fact"].forEach(function(c){var n=tb.querySelector("."+c);if(n)meta.appendChild(n);});
+    meta.appendChild(priceEl);
+    var h1el=tb.querySelector("h1");tb.insertBefore(meta,h1el?h1el.nextSibling:null);
+    placePeek();
+    col.appendChild(el("p","choose","Choose Your Edition"));
+    var list=el("div","editions");list.setAttribute("role","radiogroup");list.setAttribute("aria-label","Choose Your Edition");col.appendChild(list);
+    var variant=el("p","variant"),order=el("button","order"),xmas=el("p","xmas",XMAS),status=el("p","status"),note=el("p","note");
+    order.type="button";order.id="orderBtn";status.hidden=true;status.setAttribute("aria-live","polite");
+    var btns=d.choices.map(function(c){var b=el("button","edition");b.type="button";b.setAttribute("role","radio");b.dataset.id=c.id;
+      b.appendChild(el("span","radio"));b.appendChild(el("span","ename",c.name));b.appendChild(el("span","eprice",c.price));
+      b.addEventListener("click",function(){pick(c);});list.appendChild(b);return b;});
+    function pick(c){state.c=c;btns.forEach(function(b){b.setAttribute("aria-checked",b.dataset.id===c.id?"true":"false");});
+      priceEl.textContent=c.name+" "+c.price;
+      variant.textContent=c.line;order.textContent=c.label||"Order Now";xmas.hidden=!c.ship;note.textContent=c.note||CHECKOUT_NOTE;
+      var u=c.img||d.cover,alt=c.img?c.alt:d.alt;if(coverImg&&coverImg.dataset.u!==u){coverImg.dataset.u=u;setImg(coverImg,u,alt,"(min-width:900px) 420px, 220px",[440,840],true);
+        coverImg.parentNode.style.setProperty("--ar",c.ar||d.ar||"1/1");}
+      height();}
+    order.addEventListener("click",function(){var c=state.c;if(!c)return;
+      if(c.ext){window.open(c.ext,"_blank","noopener");return;}
+      go(c.go);});
+    col.appendChild(variant);col.appendChild(order);col.appendChild(xmas);col.appendChild(status);col.appendChild(note);
+    var det=el("details","ship");det.appendChild(el("summary","","Shipping & Delivery"));var body=el("div","ship-body");
+    SHIP.forEach(function(t){body.appendChild(el("p","",t));});det.appendChild(body);det.addEventListener("toggle",height);col.appendChild(det);
+    pick(d.choices.filter(function(c){return c.dflt;})[0]||d.choices[0]);
+    if(d.more){var mo=el("section","more");mo.appendChild(el("div","orn")).appendChild(el("span"));mo.appendChild(el("h2","",d.more.h));
+      mo.appendChild(el("p","peek-cap",d.more.cap));var st=el("div","strip");
+      d.more.imgs.forEach(function(i){var im=el("img");setImg(im,i[0],i[1],"(min-width:900px) 260px, 33vw",[260,520],false);st.appendChild(im);});
+      mo.appendChild(st);mo.appendChild(el("div","orn")).appendChild(el("span"));d.more.about.forEach(function(t){mo.appendChild(el("p","",t));});page.appendChild(mo);}
+  }else if(d.kind==="set"){
+    if(d.eName)col.appendChild(el("p","choose",d.eName));
+    col.appendChild(el("p","price-big",d.price));if(d.priceNote)col.appendChild(el("p","price-note",d.priceNote));
+    if(d.line)col.appendChild(el("p","variant",d.line));
+    var ob=el("button","order",d.label);ob.type="button";ob.id="orderBtn";ob.addEventListener("click",function(){go(d.go);});col.appendChild(ob);
+    if(d.xmas)col.appendChild(el("p","xmas",XMAS));
+    col.appendChild(el("p","note",CHECKOUT_NOTE));
+    if(d.ship){var sd=el("details","ship");sd.appendChild(el("summary","","Shipping & Delivery"));var sb=el("div","ship-body");
+      d.ship.forEach(function(t){sb.appendChild(el("p","",t));});sd.appendChild(sb);sd.addEventListener("toggle",height);col.appendChild(sd);}
+  }else{
+    var nb=el("button","order",state.notifyLabel||"Notify Me");nb.type="button";nb.id="notifyBtn";
+    nb.addEventListener("click",function(){send({type:"openNotify",bookId:d.bookId});});
+    var wrap=el("div");wrap.style.marginTop="14px";wrap.appendChild(nb);col.appendChild(wrap);
+  }
+  renderNav(d);height();
+}
+function height(){send({type:"height",px:Math.ceil(document.body.getBoundingClientRect().height),part:"main"});}
+
+/* existing page code -> this frame */
+window.addEventListener("message",function(ev){var m=ev.data;if(!m||typeof m!=="object"||m.source!==NS)return;
+  if(m.type==="payload"){connected=true;P=m.payload||null;
+    if(!slug&&P&&P.book){var s=BY_BOOK[P.book.bookId]||norm(P.book.slug);if(PAGES[s])render(s);}
+    var lab=P&&P.settings&&P.settings.labels&&P.settings.labels.notifyButton;
+    if(lab&&/on the list/i.test(lab)){state.notifyLabel=lab;var nb=document.getElementById("notifyBtn");if(nb)nb.textContent=lab;}
+    if(m.peekInside===false){var pk=document.getElementById("peekBtn");if(pk)pk.hidden=true;}
+  }
+  if(m.type==="cartResult"&&m.message){var st=document.querySelector(".status");if(st){st.hidden=false;st.textContent=m.message;}}
+});
+
+var s=detect();if(s)render(s);
+send({type:"ready"});
+[800,2500,6000].forEach(function(t){setTimeout(function(){if(!connected)send({type:"ready"});},t);});
+window.addEventListener("load",height);window.addEventListener("resize",function(){placePeek();height();});
+})();
+</script>
+</body>
+</html>
