@@ -244,7 +244,7 @@ function saleTest(){
   return false;
 }
 function saleSkip(id){return id==='ebook'||id==='giftcard';}
-function saleAmt(regular,percent){return Math.round(regular*(1-percent/100)*100)/100;}
+function saleAmt(regular,percent){var cents=Math.round(regular*100);var disc=Math.floor(cents*percent/100+1e-9);return (cents-disc)/100;}
 function saleMoney(n){return '$'+n.toFixed(2);}
 function parseAmt(s){var m=String(s).replace(/,/g,'').match(/([0-9]+(?:\.[0-9]+)?)/);return m?parseFloat(m[1]):NaN;}
 function priceHtml(regular,id){
