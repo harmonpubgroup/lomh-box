@@ -56,6 +56,8 @@ h1{margin:0;font:500 32px/1 var(--serif);color:var(--heading)}
 .ename{flex:1}.eprice{font-weight:600;white-space:nowrap}
 .variant{min-height:1.3em;margin:8px 2px;font:italic 400 14px/1.3 var(--serif);color:var(--muted);text-align:center;text-wrap:balance}
 .price-big{margin:10px 0 2px;text-align:center;font:600 24px/1.2 var(--serif)}
+.price-was{font-weight:400;color:#8A7A6E;text-decoration:line-through;text-decoration-color:#8A7A6E}
+.price-now{color:#5E1020;font-weight:600}
 .price-note{margin:0 0 8px;text-align:center;font:italic 400 14.5px/1.3 var(--serif);color:var(--muted)}
 .order{display:block;width:100%;min-height:46px;border:0;border-radius:8px;background:var(--btn);color:#F6EFE4;font:400 13px/1 var(--caps);letter-spacing:.14em;text-transform:uppercase;padding:10px}
 .order:disabled{opacity:.6}
@@ -201,6 +203,32 @@ function cover(d,parent){
 }
 function peek(){send({type:"openPeekInside"});}
 
+var saleOn=false,salePct=0;
+function saleTest(){
+  function flag(win){try{return new URLSearchParams(win.location.search).get('saletest')==='1';}catch(e){return false;}}
+  if(flag(window))return true;
+  try{if(window.parent&&window.parent!==window&&flag(window.parent))return true;}catch(e){}
+  try{if(window.top&&window.top!==window&&flag(window.top))return true;}catch(e){}
+  return false;
+}
+function saleSkip(id){return id==='ebook'||id==='giftcard';}
+function saleAmt(regular,percent){var cents=Math.round(regular*100);var disc=Math.floor(cents*percent/100+1e-9);return (cents-disc)/100;}
+function saleMoney(n){return '$'+n.toFixed(2);}
+function parseAmt(s){var m=String(s).replace(/,/g,'').match(/([0-9]+(?:\.[0-9]+)?)/);return m?parseFloat(m[1]):NaN;}
+function priceHtml(regular,id){
+  if(!saleOn||saleSkip(id))return null;
+  var n=parseAmt(regular);
+  if(isNaN(n))return null;
+  var prefix=/^from\s+/i.test(regular)?regular.match(/^from\s+/i)[0]:'';
+  return '<s class="price-was">'+regular.replace(/</g,'')+'</s> <span class="price-now">'+prefix+saleMoney(saleAmt(n,salePct))+'</span>';
+}
+function setPriceNode(node,regular,id,before){
+  var html=priceHtml(regular,id);
+  if(html){node.innerHTML=(before||'')+html;}
+  else{node.textContent=(before||'')+regular;}
+}
+if(saleTest()){saleOn=true;salePct=15;}
+
 function render(s){
   slug=s;var d=PAGES[s];document.documentElement.setAttribute("data-page",s);document.title=d.title+" | Letters of My Heart";
   var page=document.getElementById("page");page.innerHTML="";
@@ -221,7 +249,7 @@ function render(s){
     var variant=el("p","variant"),order=el("button","order"),xmas=el("p","xmas",XMAS),status=el("p","status"),note=el("p","note");
     order.type="button";order.id="orderBtn";status.hidden=true;status.setAttribute("aria-live","polite");
     var btns=d.choices.map(function(c){var b=el("button","edition");b.type="button";b.setAttribute("role","radio");b.dataset.id=c.id;
-      b.appendChild(el("span","radio"));b.appendChild(el("span","ename",c.name));b.appendChild(el("span","eprice",c.price));
+      b.appendChild(el("span","radio"));b.appendChild(el("span","ename",c.name));var ep=el("span","eprice");setPriceNode(ep,c.price,c.id);b.appendChild(ep);
       b.addEventListener("click",function(){pick(c);});list.appendChild(b);return b;});
     function pick(c){state.c=c;btns.forEach(function(b){b.setAttribute("aria-checked",b.dataset.id===c.id?"true":"false");});
       variant.textContent=c.line;order.textContent=c.label||"Order Now";xmas.hidden=!c.ship;note.textContent=c.note||CHECKOUT_NOTE;
@@ -241,7 +269,7 @@ function render(s){
       mo.appendChild(st);mo.appendChild(el("div","orn")).appendChild(el("span"));d.more.about.forEach(function(t){mo.appendChild(el("p","",t));});page.appendChild(mo);}
   }else if(d.kind==="set"){
     if(d.eName)col.appendChild(el("p","choose",d.eName));
-    col.appendChild(el("p","price-big",d.price));if(d.priceNote)col.appendChild(el("p","price-note",d.priceNote));
+    var pb=el("p","price-big");setPriceNode(pb,d.price,"set");col.appendChild(pb);if(d.priceNote)col.appendChild(el("p","price-note",d.priceNote));
     if(d.line)col.appendChild(el("p","variant",d.line));
     var ob=el("button","order",d.label);ob.type="button";ob.id="orderBtn";ob.addEventListener("click",function(){go(d.go);});col.appendChild(ob);
     if(d.xmas)col.appendChild(el("p","xmas",XMAS));
@@ -268,9 +296,28 @@ window.addEventListener("message",function(ev){var m=ev.data;if(!m||typeof m!=="
   if(m.type==="cartResult"&&m.message){var st=document.querySelector(".status");if(st){st.hidden=false;st.textContent=m.message;}}
 });
 
+
+function saleMessage(raw){
+  var m=raw;
+  if(typeof m==="string"){try{m=JSON.parse(m);}catch(e){return null;}}
+  if(m&&typeof m==="object"&&m.data&&typeof m.data==="object"&&m.data.type==="lomhSale")m=m.data;
+  if(!m||typeof m!=="object"||m.type!=="lomhSale")return null;
+  return m;
+}
+window.addEventListener("message",function(ev){
+  var m=saleMessage(ev.data);
+  if(!m)return;
+  var nextOn=!!(m.on&&typeof m.percent==="number");
+  var nextPct=nextOn?m.percent:0;
+  if(nextOn===saleOn&&nextPct===salePct)return;
+  saleOn=nextOn;salePct=nextPct;
+  if(slug)render(slug);
+});
+function askSale(){send({type:"lomhSaleAsk"});}
 var s=detect();if(s)render(s);
+askSale();
 send({type:"ready"});
-[800,2500,6000].forEach(function(t){setTimeout(function(){if(!connected)send({type:"ready"});},t);});
+[800,2500,6000].forEach(function(t){setTimeout(function(){if(!connected)send({type:"ready"});if(!saleOn)askSale();},t);});
 window.addEventListener("load",height);window.addEventListener("resize",height);
 })();
 </script>
